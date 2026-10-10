@@ -1,0 +1,23 @@
+name: StaatsSystem
+version: '${version}'
+main: de.louis.staat.StaatsPlugin
+api-version: '26.2'
+softdepend: [Vault]
+description: Raenge, Bank, Steuern und Staatskasse
+author: Louis
+commands:
+  rang:
+    description: Rang anzeigen oder setzen
+    usage: /<command> [info <spieler>|set <spieler> <rang>]
+    aliases: [rank]
+  bank:
+    description: Bankkonto
+    usage: /<command> [kontostand|einzahlen <betrag>|abheben <betrag>]
+  staatskasse:
+    description: Staatskasse
+    usage: /<command> [info|einzahlen|abheben|zahlen|steuer]
+    aliases: [kasse, treasury]
+permissions:
+  staat.admin:
+    description: Voller Zugriff auf Staatskasse und Raenge setzen
+    default: op

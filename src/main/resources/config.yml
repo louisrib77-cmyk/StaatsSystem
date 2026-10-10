@@ -1,0 +1,108 @@
+# StaatsSystem – Konfiguration (Nachrichten: MiniMessage)
+
+economy:
+  # auto    = Vault benutzen, falls vorhanden, sonst Befehle
+  # vault   = nur Vault
+  # command = nur Befehle (Einzahlen auf Bank/Staatskasse geht dann NICHT, weil der Kontostand nicht geprüft werden kann)
+  mode: auto
+  # Nur für den Befehls-Modus. Platzhalter: {player} {amount}
+  # >>> HIER die Befehle deines Wirtschafts-Plugins eintragen <<<
+  give-command: "eco give {player} {amount}"
+  take-command: "eco take {player} {amount}"
+
+default-rank: zivilist
+
+# Diese Ränge gibt es nur einmal (alter Inhaber wird wieder Zivilist)
+unique-ranks:
+  - praesident
+  - kanzler
+
+chat-prefix: true
+
+ranks:
+  zivilist:
+    display: "Zivilist"
+    color: "gray"
+    payout: 10        # Gehalt pro salary.interval-minutes
+  kanzler:
+    display: "Kanzler"
+    color: "gold"
+    payout: 10
+  praesident:
+    display: "Präsident"
+    color: "red"
+    payout: 20
+
+salary:
+  enabled: true
+  interval-minutes: 5
+  # true = Gehalt wird aus der Staatskasse bezahlt (nur wenn genug drin ist)
+  from-treasury: false
+
+tax:
+  enabled: true
+  interval-minutes: 10
+  # Steuer pro Intervall (kann der Präsident mit /staatskasse steuer [betrag] ändern)
+  amount: 2
+  # Höchste Steuer, die der Präsident einstellen darf
+  max-amount: 20
+  # Diese Ränge zahlen Steuern
+  ranks:
+    - zivilist
+
+treasury:
+  # Kanzler: so viel darf er pro Tag insgesamt aus der Kasse nehmen/auszahlen
+  chancellor-daily-limit: 200
+
+bank:
+  # Zinsen in Prozent pro Intervall (0 = keine Zinsen)
+  interest-percent: 0.5
+  interest-interval-minutes: 60
+  # Maximale Zinsen pro Konto und Intervall
+  max-interest-per-payout: 50
+
+messages:
+  prefix: "<dark_gray>[<gold>Staat</gold>]</dark_gray> <gray>"
+  players-only: "{prefix}Das geht nur als Spieler."
+  no-permission: "<red>Dazu hast du keine Berechtigung."
+  invalid-amount: "{prefix}<red>Ungültiger Betrag."
+  needs-vault: "{prefix}<red>Einzahlen geht nur, wenn dein Wirtschafts-Plugin Vault unterstützt."
+  not-enough-wallet: "{prefix}<red>Du hast nicht genug Geld."
+  not-enough-bank: "{prefix}<red>Auf deinem Konto ist nicht genug Geld."
+  economy-failed: "{prefix}<red>Die Buchung hat nicht geklappt. Es wurde nichts abgebucht."
+  unknown-player: "{prefix}<red>Spieler nicht gefunden."
+
+  salary: "{prefix}<green>+{amount}$ <gray>Gehalt als <white>{rank}</white>."
+  salary-treasury-empty: "{prefix}<red>Die Staatskasse ist leer, kein Gehalt diesmal."
+  tax-paid: "{prefix}<yellow>-{amount}$ <gray>Steuern an die Staatskasse."
+  tax-failed: "{prefix}<red>Du konntest die Steuer ({amount}$) nicht bezahlen."
+  interest: "{prefix}<green>+{amount}$ <gray>Zinsen auf deinem Bankkonto."
+
+  bank-balance: "{prefix}Bankkonto: <green>{amount}$"
+  bank-wallet: "{prefix}Bargeld: <green>{amount}$"
+  bank-deposited: "{prefix}<green>{amount}$ <gray>eingezahlt. Kontostand: <white>{balance}$"
+  bank-withdrawn: "{prefix}<green>{amount}$ <gray>abgehoben. Kontostand: <white>{balance}$"
+  bank-usage: "{prefix}/bank [kontostand] | /bank einzahlen [betrag] | /bank abheben [betrag]"
+
+  no-access: "{prefix}<red>Du hast keinen Zugriff auf die Staatskasse."
+  treasury-info: "{prefix}Staatskasse: <green>{balance}$ <gray>| Steuer: <white>{tax}$</white> alle {minutes} Min."
+  treasury-limit-info: "{prefix}Dein Tageslimit: noch <white>{remaining}$</white> von {limit}$."
+  treasury-deposited: "{prefix}<green>{amount}$ <gray>in die Staatskasse eingezahlt."
+  treasury-withdrawn: "{prefix}<green>{amount}$ <gray>aus der Staatskasse genommen."
+  treasury-paid: "{prefix}<green>{amount}$ <gray>aus der Staatskasse an <white>{player}</white> gezahlt."
+  treasury-received: "{prefix}<green>+{amount}$ <gray>aus der Staatskasse erhalten."
+  treasury-too-low: "{prefix}<red>So viel ist nicht in der Staatskasse."
+  limit-reached: "{prefix}<red>Dein Tageslimit reicht dafür nicht. Übrig: {remaining}$"
+  tax-info: "{prefix}Steuer: <white>{tax}$</white> alle {minutes} Minuten (Zivilisten)."
+  tax-set: "{prefix}<green>Steuer ist jetzt {tax}$."
+  tax-too-high: "{prefix}<red>Maximal erlaubt: {max}$."
+  treasury-usage: "{prefix}/staatskasse [info] | einzahlen [betrag] | abheben [betrag] | zahlen [spieler] [betrag] | steuer [betrag]"
+
+  own-rank: "{prefix}Dein Rang: {color}{rank}"
+  other-rank: "{prefix}{player} ist {color}{rank}"
+  rank-set: "{prefix}<green>{player} ist jetzt {color}{rank}<green>!"
+  rank-lost: "{prefix}<yellow>Du bist jetzt wieder {rank}."
+  broadcast-enabled: true
+  broadcast: "{prefix}{player} ist jetzt <white>{rank}</white>!"
+  unknown-rank: "{prefix}<red>Unbekannter Rang. Möglich: {ranks}"
+  rank-usage: "{prefix}/rang | /rang info [spieler] | /rang set [spieler] [rang]"
